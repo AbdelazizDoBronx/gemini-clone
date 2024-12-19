@@ -1,9 +1,29 @@
 import { ImageUp, Mic, SendHorizontal } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import Loading from './Loading';
+import Greetings from './Greetings';
+import run from '../config/AiModel';
+import { fetchData } from '../redux/chatSlice';
 
 const Main = () => {
-    const data = false;
+    const [input,setInput] = useState('');
+    const [history,setHistory] = useState([]);
+
+
+    function handleSubmit() {
+        setHistory(prevHistory => {
+            const updatedHistory = [...prevHistory, input];
+            return updatedHistory;
+        });
+        console.log(history); 
+        run(input);
+        fetchData(
+            input
+        )
+    }
+
+    
+    
   return (
     <div className='w-full p-3 flex flex-col'>
         <div className=' flex w-full justify-between items-center'>
@@ -15,12 +35,17 @@ const Main = () => {
             <p className='font-medium'>Suggest beautiful places to see on an upcoming road trip</p>
         </div>
         {/* skeloton */}
-        {!data && <Loading/>}
+        <Greetings/>
         <div className='relative my-auto'>
-            <input className='  w-full p-3 focus:outline-none rounded-xl shadow-md ' type='text' placeholder='Enter a prompt here'/>
+            <input className='w-full p-3 focus:outline-none rounded-xl shadow-md ' 
+            type='text'
+            placeholder='Enter a prompt here'
+            onChange={(e)=>setInput(e.target.value)}
+            value={input}
+            />
             <Mic className='absolute top-1/4 right-20'/>
             <ImageUp className='absolute top-1/4 right-12'/>
-            <SendHorizontal className='absolute top-1/4 right-4'/>
+            <SendHorizontal  onClick={()=>handleSubmit()} className='absolute top-1/4 right-4'/>
         <p className='text-pretty text-center text-neutral-500  text-sm my-3'>Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps</p>
         </div>
     </div>
