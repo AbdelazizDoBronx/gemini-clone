@@ -27,7 +27,6 @@ import {
     });
   
     const result = await chatSession.sendMessage(Prompt);
-    console.log(result.response.text());
     return result;
   }
   

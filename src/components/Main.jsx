@@ -1,26 +1,14 @@
 import { ImageUp, Mic, SendHorizontal } from 'lucide-react'
-import React, { useState } from 'react'
-import Loading from './Loading';
+import React, { useContext, useState } from 'react'
 import Greetings from './Greetings';
-import run from '../config/AiModel';
-import { fetchData } from '../redux/chatSlice';
+import Loading from './Loading'
+import { Context } from '../redux/context';
 
 const Main = () => {
-    const [input,setInput] = useState('');
-    const [history,setHistory] = useState([]);
-
-
-    function handleSubmit() {
-        setHistory(prevHistory => {
-            const updatedHistory = [...prevHistory, input];
-            return updatedHistory;
-        });
-        console.log(history); 
-        run(input);
-        fetchData(
-            input
-        )
-    }
+    const {input,setInput,sendData,loading,showData} = useContext(Context);
+    
+    
+    
 
     
     
@@ -35,7 +23,7 @@ const Main = () => {
             <p className='font-medium'>Suggest beautiful places to see on an upcoming road trip</p>
         </div>
         {/* skeloton */}
-        <Greetings/>
+        {loading ? <Loading/>  : <Greetings/>}
         <div className='relative my-auto'>
             <input className='w-full p-3 focus:outline-none rounded-xl shadow-md ' 
             type='text'
@@ -45,7 +33,7 @@ const Main = () => {
             />
             <Mic className='absolute top-1/4 right-20'/>
             <ImageUp className='absolute top-1/4 right-12'/>
-            <SendHorizontal  onClick={()=>handleSubmit()} className='absolute top-1/4 right-4'/>
+            <SendHorizontal  onClick={()=>sendData()} className='absolute top-1/4 right-4'/>
         <p className='text-pretty text-center text-neutral-500  text-sm my-3'>Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps</p>
         </div>
     </div>
