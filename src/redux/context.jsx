@@ -20,15 +20,18 @@ const ContextProvider = (props) => {
         setLoading(true);
         setShowData(true);
         const resp = await run(input);
-        setInput('');
+        setAllPrompts((prv)=>[...prv,input])
+        setRecentPrompt(input)
+        setResponseData(resp);
         setLoading(false);
-        console.log(resp.response.text())
+        setInput('');
+        
     }
 
     
 
     const contextValue = {
-        sendData,input,setInput,setAllPrompts,recentPrompt,loading,setLoading,showData,setShowData,responseData,setResponseData
+        sendData,input,setInput,setAllPrompts,allPrompts,recentPrompt,loading,setLoading,showData,setShowData,responseData,setResponseData
     };
 
     return (

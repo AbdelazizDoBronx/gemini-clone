@@ -1,0 +1,12 @@
+.loaderHr{
+    animation: loader 3s infinite;
+};
+
+@keyframes loader {
+    0%{
+        background-size: -800px 0px;
+    }
+    100%{
+        background-size: 800px 0px;
+    }
+}

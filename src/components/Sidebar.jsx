@@ -1,8 +1,10 @@
 import { AlignJustify, Plus, Info, History, Settings } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Context } from '../redux/context';
 
 const Sidebar = () => {
   const [MenuToggle, setMenuToggle] = useState(false);
+  const {allPrompts} = useContext(Context);
 
   return (
     <div
@@ -26,9 +28,9 @@ const Sidebar = () => {
         <div className="text-pretty my-2">
           <h2 className="font-semibold my-1 text-2xl">{!MenuToggle && 'Recent'}</h2>
           {!MenuToggle && (
-            <p className="text-neutral-500">
-              Suggest beautiful places to see on an upcoming road trip
-            </p>
+            allPrompts?.map((prompt,idx)=>(
+              <p className="text-neutral-500 my-1 text-ellipsis" key={idx}>{prompt}</p>
+            ))
           )}
         </div>
       </div>

@@ -4,7 +4,7 @@ import Main from '../components/Main'
 
 const Home = () => {
   return (
-    <div className='flex w-full '>
+    <div className='flex w-full h-screen '>
         <Sidebar/>
         <Main/>
     </div>
